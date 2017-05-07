@@ -10,7 +10,7 @@ with open("keys.json") as infile:
 @app.route('/')
 def hello():
     
-    r = requests.post(url, json={"text" : "i'm being built"} )
+    r = requests.post(url, data={"text" : "i'm being built"} )
     return "hello"
 
 if __name__ == "__main__":
