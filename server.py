@@ -4,7 +4,7 @@ import time, sys, requests
 from tinydb import TinyDB, Query
 
 HOST = None
-TIME_DELAY = 300
+TIME_DELAY = 5
 DB_ADDRESS = "db.json"
 
 if len(sys.argv)>1 and sys.argv[1] == "prod":
@@ -35,7 +35,10 @@ def poll():
     q = Query()
     while(True):
         curr_status = requests.get('https://b21.jerrington.me/api/status').json()['status']
+        print(type(curr_status))
         old_status = db.all()[0]['status'] #this can later be changed for multiple locations
+        print("old " + old_status)
+        print("curr " + str(curr_status))
         if old_status != str(curr_status):
             db.update({"status" : str(curr_status)}, q.building=="b21")
             post_slack()
